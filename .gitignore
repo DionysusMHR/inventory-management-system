@@ -1,3 +1,4 @@
 venv
 notes.txt
 sandbox
+database/db.sqlite3
