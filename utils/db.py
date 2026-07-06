@@ -89,7 +89,7 @@ class InsertData:
         self.con = sqlite3.connect(DATABASE_PATH)
         self.cur = self.con.cursor()
 
-    def insert_items_table(self, name, category, unit, min_stock):
+    def insert_items_table(self, name:str, category:str, unit:str, min_stock:float)->None:
         self.cur.execute(
             '''INSERT INTO items (name, category, unit, min_stock)
             VALUES (?, ?, ?, ?)''',
@@ -97,7 +97,7 @@ class InsertData:
         )
         self.con.commit()
 
-    def insert_warehouses_table(self, name, loc):
+    def insert_warehouses_table(self, name:str, loc:str)->None:
         self.cur.execute(
             '''INSERT INTO warehouses (name, loc)
             VALUES (?, ?)''',
@@ -105,7 +105,7 @@ class InsertData:
         )
         self.con.commit()
 
-    def insert_inventory_table(self, warehouse_id, item_id, qty):
+    def insert_inventory_table(self, warehouse_id:int, item_id:int, qty:float)->None:
         self.cur.execute(
             '''INSERT INTO inventory (warehouse_id, item_id, qty)
             VALUES (?, ?, ?)
@@ -116,7 +116,7 @@ class InsertData:
         )
         self.con.commit()
 
-    def insert_transactions_table(self, item_id, warehouse_id, type_, qty, desc):
+    def insert_transactions_table(self, item_id:int, warehouse_id:int, type_:str, qty:float, desc:str)->None:
         self.cur.execute(
             '''INSERT INTO transactions (item_id, warehouse_id, type, qty, desc)
             VALUES (?, ?, ?, ?, ?)''',
@@ -124,7 +124,7 @@ class InsertData:
         )
         self.con.commit()
 
-    def insert_users_table(self, username, password, role):
+    def insert_users_table(self, username:str, password:str, role:str)->None:
         self.cur.execute(
             '''INSERT INTO users (username, password, role)
             VALUES (?, ?, ?)''',
@@ -138,7 +138,7 @@ class SelectData:
         self.con = sqlite3.connect(DATABASE_PATH)
         self.cur = self.con.cursor()
 
-    def get_current_stock(self):
+    def get_current_stock(self)->list:
         self.cur.execute(
             '''SELECT
             i.id AS item_id,
@@ -159,7 +159,7 @@ class SelectData:
 
 
 class DeleteRecords:
-    def delete_all(self, name:str):
+    def delete_all(self, name:str)->None:
         con = sqlite3.connect(DATABASE_PATH)
         cur = con.cursor()
         cur.execute(
