@@ -187,6 +187,15 @@ class SelectData:
         warehouse_names = self.cur.fetchall()
         warehouse_names = [row[0] for row in warehouse_names]
         return warehouse_names
+    
+    def get_qty(self, item_id, warehouse_id)->float:
+        self.cur.execute(
+            f'''SELECT qty FROM inventory
+            WHERE item_id = "{item_id}"
+            AND warehouse_id = "{warehouse_id}"'''
+        )
+        qty = self.cur.fetchone()[0]
+        return qty
 
 
 class DeleteRecords:
@@ -204,6 +213,5 @@ class DeleteRecords:
 if __name__ == "__main__":
 
     select_handle = SelectData()
-    item_names = select_handle.get_item_names()
-    wh_names = select_handle.get_warehouse_names()
-    print(item_names)
+    qty = select_handle.get_qty(1, 4)
+    print(qty)

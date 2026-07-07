@@ -36,4 +36,4 @@ if sub_btn is True:
         qty=qty
     )
 
-    st.success('The operation was successful')
+    st.success('The operation was successful.')

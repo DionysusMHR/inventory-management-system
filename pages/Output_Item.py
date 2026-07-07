@@ -20,19 +20,27 @@ with st.form(key='output_form'):
 if sub_btn is True:
     item_id = select_handler.get_item_id(item_name=name)
     warehouse_id = select_handler.get_warehouse_id(warehouse_name=warehouse)
+    current_qty = select_handler.get_qty(item_id=item_id, warehouse_id=warehouse_id)
+    
+    if current_qty < qty:
+        st.error(
+            '''Operation encountered error:
+            The amount of stock inventory is less than the requested value.'''
+        )
 
-    insert_handler.insert_transactions_table(
-        item_id=item_id,
-        warehouse_id=warehouse_id,
-        type_='OUT',
-        qty=qty,
-        desc=desc
-    )
+    else:
+        insert_handler.insert_transactions_table(
+            item_id=item_id,
+            warehouse_id=warehouse_id,
+            type_='OUT',
+            qty=qty,
+            desc=desc
+        )
 
-    insert_handler.insert_inventory_table(
-        warehouse_id=warehouse_id,
-        item_id=item_id,
-        qty=-qty
-    )
-
-    st.success('The operation was successful')
+        insert_handler.insert_inventory_table(
+            warehouse_id=warehouse_id,
+            item_id=item_id,
+            qty=-qty
+        )
+    
+        st.success('The operation was successful.')
