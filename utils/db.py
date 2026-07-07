@@ -212,6 +212,5 @@ class DeleteRecords:
 
 if __name__ == "__main__":
 
-    select_handle = SelectData()
-    qty = select_handle.get_qty(1, 4)
-    print(qty)
+    delete_handler = DeleteRecords()
+    delete_handler.delete_all('warehouses')

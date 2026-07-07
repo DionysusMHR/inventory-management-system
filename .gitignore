@@ -3,3 +3,4 @@ notes.txt
 sandbox
 database/db.sqlite3
 pages/test.py
+utils/__pycache__
