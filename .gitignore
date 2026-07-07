@@ -2,3 +2,4 @@ venv
 notes.txt
 sandbox
 database/db.sqlite3
+pages/test.py

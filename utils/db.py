@@ -171,6 +171,22 @@ class SelectData:
         )
         warehouse_id = self.cur.fetchone()
         return warehouse_id[0]
+    
+    def get_item_names(self)->list:
+        self.cur.execute(
+            '''SELECT name FROM items'''
+        )
+        item_names = self.cur.fetchall()
+        item_names = [row[0] for row in item_names]
+        return item_names
+    
+    def get_warehouse_names(self)->list:
+        self.cur.execute(
+            '''SELECT name FROM warehouses'''
+        )
+        warehouse_names = self.cur.fetchall()
+        warehouse_names = [row[0] for row in warehouse_names]
+        return warehouse_names
 
 
 class DeleteRecords:
@@ -188,7 +204,6 @@ class DeleteRecords:
 if __name__ == "__main__":
 
     select_handle = SelectData()
-    item_id = select_handle.get_item_id(item_name='motor-01')
-    warehouse_id = select_handle.get_warehouse_id(warehouse_name='pm-wh')
-    print(type(warehouse_id))
-    print(type(item_id))
+    item_names = select_handle.get_item_names()
+    wh_names = select_handle.get_warehouse_names()
+    print(item_names)

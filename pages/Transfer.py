@@ -5,11 +5,15 @@ from utils.db import InsertData, SelectData
 insert_handler = InsertData()
 select_handler = SelectData()
 
+item_names = select_handler.get_item_names()
+wh_names = select_handler.get_warehouse_names()
+
 st.title('Transfer between warehouses')
+
 with st.form(key='transfer_form'):
-    name = st.text_input('Name')
-    from_warehouse = st.text_input('From Warehouse')
-    to_warehouse = st.text_input('To Warehouse')
+    name = st.selectbox('Name', item_names, index=None)
+    from_warehouse = st.selectbox('From Warehouse', wh_names, index=None)
+    to_warehouse = st.selectbox('To Warehouse', wh_names, index=None)
     qty = st.number_input('Quantity')
     desc = st.text_area('Description')
     sub_btn = st.form_submit_button('Submit')
