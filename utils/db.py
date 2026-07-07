@@ -1,5 +1,4 @@
 import sqlite3
-import pandas as pd
 
 
 # Global Variable
@@ -156,6 +155,22 @@ class SelectData:
         )
         rows = self.cur.fetchall()
         return rows
+    
+    def get_item_id(self, item_name:str)->int:
+        self.cur.execute(
+            f'''SELECT id FROM items
+            WHERE name = "{item_name}"'''
+        )
+        item_id = self.cur.fetchone()
+        return item_id[0]
+    
+    def get_warehouse_id(self, warehouse_name:str)->int:
+        self.cur.execute(
+            f'''SELECT id FROM warehouses
+            WHERE name = "{warehouse_name}"'''
+        )
+        warehouse_id = self.cur.fetchone()
+        return warehouse_id[0]
 
 
 class DeleteRecords:
@@ -167,40 +182,13 @@ class DeleteRecords:
         )
         con.commit()
         con.close()
-    
 
-
-# define functions for better management database
-
-def create_tables():
-    create = CreateTable()
-    create.create_inventory_table()
-    create.create_items_table()
-    create.create_transactions_table()
-    create.create_users_table()
-    create.create_warehouses_table()
-
-def delete_tables():
-    delete = DeleteTable()
-    for t in TABLES:
-        delete.delete_table(name=t)
 
 
 if __name__ == "__main__":
-    #delete_tables()
-    #create_tables()
 
-    insert_handle = InsertData()
-    #insert_handle.insert_items_table('turbo_fan', 'fan', 'Pcs', 20)
-    #insert_handle.insert_warehouses_table('product_wh', 'site-2')
-    #insert_handle.insert_inventory_table(2, 1, 100)
-    #insert_handle.insert_transactions_table(1, 1, 'IN', 200, 'be anbar material dar site 1')
-    
     select_handle = SelectData()
-    #rows = select_handle.get_current_stock()
-    #df = pd.DataFrame(rows, columns=['item_id', 'item_name', 'category', 'warehose_id', 'warehouse_name', 'warehouse_loc', 'current_stock'])
-    #df.to_excel('inventory3.xlsx')
-    #df.to_markdown('inventory.md')
-
-    delete_handle = DeleteRecords()
-    #delete_handle.delete_all('transactions')
+    item_id = select_handle.get_item_id(item_name='motor-01')
+    warehouse_id = select_handle.get_warehouse_id(warehouse_name='pm-wh')
+    print(type(warehouse_id))
+    print(type(item_id))
