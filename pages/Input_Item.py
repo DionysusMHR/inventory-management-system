@@ -11,7 +11,7 @@ wh_names = select_handler.get_warehouse_names()
 
 st.title('Input Item')
 
-with st.form(key='input_form', enter_to_submit=False):
+with st.form(key='input_form', enter_to_submit=False, clear_on_submit=True):
     name = st.selectbox('Name', item_names, index=None)
     warehouse = st.selectbox('Warehouse', wh_names, index=None)
     qty = st.number_input('Quantity')
