@@ -10,7 +10,7 @@ wh_names = select_handler.get_warehouse_names()
 
 st.title('Transfer between warehouses')
 
-with st.form(key='transfer_form'):
+with st.form(key='transfer_form', enter_to_submit=False):
     name = st.selectbox('Name', item_names, index=None)
     from_warehouse = st.selectbox('From Warehouse', wh_names, index=None)
     to_warehouse = st.selectbox('To Warehouse', wh_names, index=None)

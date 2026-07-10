@@ -10,7 +10,7 @@ st.divider()
 
 
 st.header('Items')
-with st.form(key='items'):
+with st.form(key='items', enter_to_submit=False):
     name = st.text_input('Name')
     category = st.text_input('Category')
     unit = st.text_input('Unit')
@@ -22,7 +22,7 @@ if item_sub_btn is True:
 
 
 st.header('Warehouse')
-with st.form(key='wh'):
+with st.form(key='wh', enter_to_submit=False):
     name = st.text_input('Name')
     loc = st.text_input('Location')
     wh_sub_btn = st.form_submit_button('Submit')
@@ -33,7 +33,7 @@ if wh_sub_btn is True:
 
 
 st.header('Users')
-with st.form(key='users'):
+with st.form(key='users', enter_to_submit=False):
     username = st.text_input('Username')
     password = st.text_input('Password')
     role = st.text_input('Role')
