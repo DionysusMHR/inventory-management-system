@@ -22,7 +22,12 @@ if sub_btn is True:
     warehouse_id = select_handler.get_warehouse_id(warehouse_name=warehouse)
     current_qty = select_handler.get_qty(item_id=item_id, warehouse_id=warehouse_id)
     
-    if current_qty < qty:
+    if current_qty == None:
+        st.error(
+            '''The item in this warehouse has no inventory.'''
+        )
+    
+    elif current_qty < qty:
         st.error(
             '''Operation encountered error:
             The amount of stock inventory is less than the requested value.'''

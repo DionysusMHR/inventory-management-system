@@ -194,8 +194,12 @@ class SelectData:
             WHERE item_id = "{item_id}"
             AND warehouse_id = "{warehouse_id}"'''
         )
-        qty = self.cur.fetchone()[0]
-        return qty
+        qty = self.cur.fetchone()
+
+        if qty == None:
+            return None
+        else:
+            return qty[0]
 
 
 class DeleteRecords:
