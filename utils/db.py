@@ -2,8 +2,19 @@ import sqlite3
 
 
 # Global Variable
+
 DATABASE_PATH = r'database/db.sqlite3'
-TABLES = ['items', 'warehouses', 'inventory', 'transactions', 'users']
+
+TABLES = [
+    'items',
+    'warehouses',
+    'inventory',
+    'transactions',
+    'users',
+    'unit',
+    'location',
+    'category'
+]
 
 
 class CreateTable:
@@ -70,6 +81,29 @@ class CreateTable:
             );'''
         )
 
+    def create_category_table(self):
+        self.cur.execute(
+            '''CREATE TABLE IF NOT EXISTS category(
+            id INTEGER PRIMARY KEY,
+            category TEXT NOT NULL);'''
+        )
+
+    def create_unit_table(self):
+        self.cur.execute(
+            '''CREATE TABLE IF NOT EXISTS unit(
+            id INTEGER PRIMARY KEY,
+            desc TEXT NOT NULL,
+            symbol TEXT NOT NULL);'''
+        )
+
+    def create_location_table(self):
+        self.cur.execute(
+            '''CREATE TABLE IF NOT EXISTS location(
+            id INTEGER PRIMARY KEY,
+            location TEXT NOT NULL,
+            address TEXT NOT NULL);'''
+        )
+
 
 class DeleteTable:
     def delete_table(self, name:str)->None:
@@ -128,6 +162,30 @@ class InsertData:
             '''INSERT INTO users (username, password, role)
             VALUES (?, ?, ?)''',
             (username, password, role)
+        )
+        self.con.commit()
+
+    def insert_category_table(self, category):
+        self.cur.execute(
+            '''INSERT INTO category (category)
+            VALUES (?)''',
+            (category,)
+        )
+        self.con.commit()
+    
+    def insert_location_table(self, location, address):
+        self.cur.execute(
+            '''INSERT INTO location (location, address)
+            VALUES (?, ?)''',
+            (location, address)
+        )
+        self.con.commit()
+
+    def insert_unit_table(self, desc, symbol):
+        self.cur.execute(
+            '''INSERT INTO unit (desc, symbol)
+            VALUES (?, ?)''',
+            (desc, symbol)
         )
         self.con.commit()
 
@@ -200,6 +258,30 @@ class SelectData:
             return None
         else:
             return qty[0]
+        
+    def get_category_list(self):
+        self.cur.execute(
+            '''SELECT category FROM category'''
+        )
+        categories = self.cur.fetchall()
+        categories = [row[0] for row in categories]
+        return categories
+    
+    def get_location_list(self):
+        self.cur.execute(
+            '''SELECT location FROM location'''
+        )
+        locations = self.cur.fetchall()
+        locations = [row[0] for row in locations]
+        return locations
+    
+    def get_unit_list(self):
+        self.cur.execute(
+            '''SELECT symbol FROM unit'''
+        )
+        units = self.cur.fetchall()
+        units = [row[0] for row in units]
+        return units
 
 
 class DeleteRecords:
@@ -215,6 +297,8 @@ class DeleteRecords:
 
 
 if __name__ == "__main__":
-
-    delete_handler = DeleteRecords()
-    delete_handler.delete_all('warehouses')
+    create_handler = CreateTable()
+    insert_handler = InsertData()
+    select_handler = SelectData()
+    delete_table_handler = DeleteTable()
+    

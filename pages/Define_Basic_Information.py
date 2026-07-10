@@ -1,8 +1,14 @@
 import streamlit as st
-from utils.db import InsertData
+from utils.db import InsertData, SelectData
 
 
-handler = InsertData()
+insert_handler = InsertData()
+select_handler = SelectData()
+
+#load data lists
+categories = select_handler.get_category_list()
+locations = select_handler.get_location_list()
+units = select_handler.get_unit_list()
 
 
 st.title('Define Basic Information')
@@ -12,24 +18,52 @@ st.divider()
 st.header('Items')
 with st.form(key='items', enter_to_submit=False, clear_on_submit=True):
     name = st.text_input('Name')
-    category = st.text_input('Category')
-    unit = st.text_input('Unit')
+    category = st.selectbox('Category', categories, index=None)
+    unit = st.selectbox('Unit', units, index=None)
     min_stock = st.number_input('Min Stock', min_value=0.0)
     item_sub_btn = st.form_submit_button('Submit')
 if item_sub_btn is True:
-    handler.insert_items_table(name, category, unit, min_stock)
+    insert_handler.insert_items_table(name, category, unit, min_stock)
     st.success('The operation was successful')
 
 
 st.header('Warehouse')
 with st.form(key='wh', enter_to_submit=False, clear_on_submit=True):
     name = st.text_input('Name')
-    loc = st.text_input('Location')
+    loc = st.selectbox('Location', locations, index=None)
     wh_sub_btn = st.form_submit_button('Submit')
 if wh_sub_btn is True:
-    handler.insert_warehouses_table(name, loc)
+    insert_handler.insert_warehouses_table(name, loc)
     st.success('The operation was successful')
 
+
+st.header('Category')
+with st.form(key='category', enter_to_submit=False, clear_on_submit=True):
+    category_name = st.text_input('Category')
+    category_submit_btn = st.form_submit_button('Submit')
+if category_submit_btn is True:
+    insert_handler.insert_category_table(category_name)
+    st.success('The operation was successful')
+
+
+st.header('Location')
+with st.form(key='location', enter_to_submit=False, clear_on_submit=True):
+    location_name = st.text_input('Location Name')
+    location_address = st.text_input('Address')
+    location_submit_btn = st.form_submit_button('Submit')
+if location_submit_btn is True:
+    insert_handler.insert_location_table(location_name, location_address)
+    st.success('The operation was successful')
+
+
+st.header('Unit')
+with st.form(key='unit', enter_to_submit=False, clear_on_submit=True):
+    desc = st.text_input('Desc')
+    symbol = st.text_input('Symbol')
+    unit_submit_btn = st.form_submit_button('Submit')
+if unit_submit_btn is True:
+    insert_handler.insert_unit_table(desc, symbol)
+    st.success('The operation was successful')
 
 
 st.header('Users')
@@ -39,6 +73,6 @@ with st.form(key='users', enter_to_submit=False, clear_on_submit=True):
     role = st.text_input('Role')
     user_sub_btn = st.form_submit_button('Submit')
 if user_sub_btn is True:
-    handler.insert_users_table(username, password, role)
+    insert_handler.insert_users_table(username, password, role)
     st.success('The operation was successful')
     

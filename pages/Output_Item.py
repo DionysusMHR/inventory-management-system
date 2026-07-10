@@ -5,6 +5,8 @@ from utils.db import InsertData, SelectData
 insert_handler = InsertData()
 select_handler = SelectData()
 
+
+# load data lists
 item_names = select_handler.get_item_names()
 wh_names = select_handler.get_warehouse_names()
 
