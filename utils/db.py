@@ -222,6 +222,13 @@ class SelectData:
         item_id = self.cur.fetchone()
         return item_id[0]
     
+    def get_items_table(self):
+        self.cur.execute(
+            '''SELECT * FROM items'''
+        )
+        items = self.cur.fetchall()
+        return items
+    
     def get_warehouse_id(self, warehouse_name:str)->int:
         self.cur.execute(
             f'''SELECT id FROM warehouses
@@ -282,6 +289,14 @@ class SelectData:
         units = self.cur.fetchall()
         units = [row[0] for row in units]
         return units
+    
+    def get_users(self):
+        self.cur.execute(
+            '''SELECT username FROM users'''
+        )
+        users = self.cur.fetchall()
+        users = [row[0] for row in users]
+        return users
 
 
 class DeleteRecords:
